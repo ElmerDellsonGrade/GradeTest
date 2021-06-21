@@ -1,0 +1,204 @@
+openapi: 3.0.1
+info:
+  title: Grade API TEST
+  description: Test documentation for Grade's API.
+  version: '0.1'
+  
+servers:
+  - url: 'https://localhost/Luvit.Api/v1'
+  - url: 'http://localhost/Luvit.Api/v1'
+
+paths:
+
+  /users/helloworld:
+    get:
+      description: Returns the string "Hello World!"
+      responses:
+        '200':
+          description: The string was successfully returned.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  response:
+                    type: string
+                    example: Hello World!
+        '401':
+          description: Authorization was denied.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.
+  
+  /users/echo:
+    get:
+      description: Returns the given input string
+      parameters:
+        - name: input
+          in: query
+          description: The string to be returned
+          schema:
+            type: string
+            example: Echo!
+      
+      responses:
+        '200':
+          description: The input string was successfully returned.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  response:
+                    type: string
+                    example: Echo!
+        '401':
+          description: Authorization was denied.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.
+    
+  /coursecatalogue:
+    get:
+      description: Returns the course catalogue for the PersonalId on the PostalSiteId and in the Categories, filtered by SearchField.
+      parameters:
+        - name: PersonalId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: 1C4F7518-6DAD-4573-9E48-218E1EB8E05C
+        - name: SearchField
+          in: query
+          allowEmptyValue: true
+          schema:
+            type: string
+            example: Management
+        - name: Categories
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: PortalSiteId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: '1'
+        - name: Cookie
+          in: header
+          schema:
+            type: string
+            example: >-
+              ASP.NET_SessionId=hqmcv2grmvqdtauii553k020; sessionTimeout=119;
+              __RequestVerificationToken_L0x1dml0UG9ydGFs0=mcxnQs_yKvhkRKNqds2U0hq7x2EbV5-iNOWwKHSZBznFdMk5MRByoBoxolYRpxxlCdNqkhw9F-jBKLGQwfqcI5eX7D5W6NX-aey0Gh812RA1;
+              __RequestVerificationToken_L2x1dml0YWRtaW41=8valxzyc3gUmKl_Ie680vrM1neq85u7Ng9CQFdPDYiSxIz_pOnmJzCn1oaq_8JxAiwdpWySdJHHzI0GScDG4P44z7-AKaMpz_-3n8LxM6JA1;
+              la2004b=8A5D04D89E809836C24A5CBC55D456ADBEEF552736644717D63A9D550B92EC6216A86469E77660102CA281F2C7D0CF5164E2F0E8A9FD3FD79F30819AA04B7B376FBAFE85322BDD7E71507F3A642E18993ED9E4A75C3800EBF4DD9028CAF432C10AFB441376D095E93D875B586B7C9FDF16FF7D6A69E5D63AA8AC4B6691D5034648F1DFF4B1D58760D16CEE2CD3EAACC4;
+              activeMenus=45portalsites;
+              __RequestVerificationToken_L0xGVg2=WZdMB8L3YRYvD9EMksTZRWRBttErSnMX157kt1KShxchADF_TuQKOvpxPCrl6IK1iM8OMZcRQru4FWtLGbjdCtLbMMI_fHuBWr37gSxAISg1;
+              lp2004b=092E20D1FA063E131DFACB66DC3D7C5C26D7B37A1F96A67818459DD235DBA0035A427016FD4F5CF011D19F19C5450A377F73FAC8084E2A631A20F573E56E3EB5A1AC7E1423B27C28B5C44BD977336705EBE8A6801AA2575BAC9B14599C187A62D5F805A636AA8F0326C11A41F17BEC07;
+              username=;
+      responses:
+        '200':
+          description: The course catalogue
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Courses'
+                    
+  /engagement/dataforunit:
+    get:
+      description: Returns data for the unit
+      parameters:
+        - name: selectionId
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: languageId
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: hello
+        - name: Cookie
+          in: header
+          schema:
+            type: string
+            example: >-
+              ASP.NET_SessionId=hqmcv2grmvqdtauii553k020; sessionTimeout=119;
+              __RequestVerificationToken_L0x1dml0UG9ydGFs0=mcxnQs_yKvhkRKNqds2U0hq7x2EbV5-iNOWwKHSZBznFdMk5MRByoBoxolYRpxxlCdNqkhw9F-jBKLGQwfqcI5eX7D5W6NX-aey0Gh812RA1;
+              __RequestVerificationToken_L2x1dml0YWRtaW41=8valxzyc3gUmKl_Ie680vrM1neq85u7Ng9CQFdPDYiSxIz_pOnmJzCn1oaq_8JxAiwdpWySdJHHzI0GScDG4P44z7-AKaMpz_-3n8LxM6JA1;
+              la2004b=8A5D04D89E809836C24A5CBC55D456ADBEEF552736644717D63A9D550B92EC6216A86469E77660102CA281F2C7D0CF5164E2F0E8A9FD3FD79F30819AA04B7B376FBAFE85322BDD7E71507F3A642E18993ED9E4A75C3800EBF4DD9028CAF432C10AFB441376D095E93D875B586B7C9FDF16FF7D6A69E5D63AA8AC4B6691D5034648F1DFF4B1D58760D16CEE2CD3EAACC4;
+              activeMenus=45portalsites;
+              __RequestVerificationToken_L0xGVg2=WZdMB8L3YRYvD9EMksTZRWRBttErSnMX157kt1KShxchADF_TuQKOvpxPCrl6IK1iM8OMZcRQru4FWtLGbjdCtLbMMI_fHuBWr37gSxAISg1;
+              lp2004b=092E20D1FA063E131DFACB66DC3D7C5C26D7B37A1F96A67818459DD235DBA0035A427016FD4F5CF011D19F19C5450A377F73FAC8084E2A631A20F573E56E3EB5A1AC7E1423B27C28B5C44BD977336705EBE8A6801AA2575BAC9B14599C187A62D5F805A636AA8F0326C11A41F17BEC07;
+              username=;
+            
+      responses:
+        '200':
+          description: Data returned successfully
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/UnitData'
+
+components:
+  schemas:
+    
+    Courses:
+      description: Array of courses
+      type: array
+      items: 
+        $ref: '#/components/schemas/Course'
+    
+    Course:
+      description: A course
+      properties:
+        courseId: 
+          type: integer
+        courseObjectId:
+          type: integer
+        title: 
+          type: string
+        description:
+          type: string
+        image:
+          type: object
+        type:
+          type: string
+        courseDetails:
+          type: string
+    
+    UnitData:
+      type: object
+      description: Collection of unit data
+      properties:
+        EngagementStatus:
+          type: object
+          properties:
+            noActiveSurveys: 
+              type: boolean
+            notEnoughAnswers:
+              type: boolean
+            minNbrOfAnswers:
+              type: integer
+        engagementSurveys:
+          type: array
+          items: 
+            type: string
+        averages:
+          type: array
+          items:
+            type: string
+    
