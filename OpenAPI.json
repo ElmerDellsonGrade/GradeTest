@@ -12,6 +12,7 @@ paths:
 
   /users/helloworld:
     get:
+      title: GET Hello World
       description: Returns the string "Hello World!", if you ask nicely.
       responses:
         '200':
