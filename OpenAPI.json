@@ -10,6 +10,138 @@ servers:
 
 paths:
 
+  /coursecatalogue/{unitId}:
+    get:
+      summary: Get course catalogue
+      description: Get courses in course catalogue for a specific unit.
+      tags:
+        - Course Catalogue
+      security: 
+        - Cookie: []
+          Authorization: []
+      parameters: 
+        - in: path
+          name: unitId
+          schema:
+            type: integer
+          required: true
+
+      
+      responses:
+        '200':
+          description: Data returned successfully!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Courses'
+      
+        '401':
+          description: Authorization denied!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.
+                    
+        '403':
+          description: Forbidden. Insufficient access rights.        
+
+  /education/programs/teamstats/{teamId}:
+    get:
+      summary: Get team stats
+      description: Get programs stats for a team.
+      tags:
+        - Education
+      security: 
+        - Cookie: []
+          Authorization: []
+      parameters:
+        - in: path
+          name: teamId
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: startDate
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: endDate
+          required: true
+          schema:
+            type: string
+      
+      responses:
+        '200':
+          description: Data returned successfully!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ProgramStatss'
+      
+        '401':
+          description: Authorization denied!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.      
+        
+        '403':
+          description: Forbidden. Insufficient access rights.
+
+  /engagement/dataforunit:
+    get:
+      summary: Get unit data
+      description: Returns data for the unit.
+      tags:
+        - Engagement
+      security: 
+        - Cookie: []
+          Authorization: []
+      parameters:
+        - name: selectionId
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: languageId
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: hello
+            
+      responses:
+        '200':
+          description: Data returned successfully!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/UnitData'
+                
+        '401':
+          description: Authorization denied!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.
+
+        '403':
+          description: Forbidden. Insufficient access rights.
+
   /user/jobexperience:
     put:
       summary: Update job experience
@@ -145,138 +277,6 @@ paths:
                     
         '403':
           description: Forbidden. Insufficient access rights.
-
-  /education/programs/teamstats/{teamId}:
-    get:
-      summary: Get team stats
-      description: Get programs stats for a team.
-      tags:
-        - Education
-      security: 
-        - Cookie: []
-          Authorization: []
-      parameters:
-        - in: path
-          name: teamId
-          required: true
-          schema:
-            type: integer
-        - in: query
-          name: startDate
-          required: true
-          schema:
-            type: string
-        - in: query
-          name: endDate
-          required: true
-          schema:
-            type: string
-      
-      responses:
-        '200':
-          description: Data returned successfully!
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/ProgramStatss'
-      
-        '401':
-          description: Authorization denied!
-          content:
-            application/json; charset=utf-8:
-              schema:
-                properties:
-                  message:
-                    type: string
-                    example: Authorization has been denied for this request.      
-        
-        '403':
-          description: Forbidden. Insufficient access rights.                    
-  
-  /coursecatalogue/{unitId}:
-    get:
-      summary: Get course catalogue
-      description: Get courses in course catalogue for a specific unit.
-      tags:
-        - Course Catalogue
-      security: 
-        - Cookie: []
-          Authorization: []
-      parameters: 
-        - in: path
-          name: unitId
-          schema:
-            type: integer
-          required: true
-
-      
-      responses:
-        '200':
-          description: Data returned successfully!
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Courses'
-      
-        '401':
-          description: Authorization denied!
-          content:
-            application/json; charset=utf-8:
-              schema:
-                properties:
-                  message:
-                    type: string
-                    example: Authorization has been denied for this request.
-                    
-        '403':
-          description: Forbidden. Insufficient access rights.                    
-                    
-  /engagement/dataforunit:
-    get:
-      summary: Get unit data
-      description: Returns data for the unit.
-      tags:
-        - Engagement
-      security: 
-        - Cookie: []
-          Authorization: []
-      parameters:
-        - name: selectionId
-          in: query
-          schema:
-            type: string
-            example: '1'
-        - name: languageId
-          in: query
-          schema:
-            type: string
-            example: '1'
-        - name: type
-          in: query
-          schema:
-            type: string
-            example: hello
-            
-      responses:
-        '200':
-          description: Data returned successfully!
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/UnitData'
-                
-        '401':
-          description: Authorization denied!
-          content:
-            application/json; charset=utf-8:
-              schema:
-                properties:
-                  message:
-                    type: string
-                    example: Authorization has been denied for this request.
-
-        '403':
-          description: Forbidden. Insufficient access rights.                    
 
 components:
   schemas:
