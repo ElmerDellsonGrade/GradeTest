@@ -5,117 +5,121 @@ info:
   version: '0.1'
   
 servers:
+  - url: 'https://develop.luvit.se/LuvitApi/v1'
   - url: 'https://localhost/Luvit.Api/v1'
-  - url: 'http://localhost/Luvit.Api/v1'
 
 paths:
 
-  /users/helloworld:
-    get:
-      title: GET Hello World
-      description: Returns the string "Hello World!", if you ask nicely.
-      responses:
-        '200':
-          description: The string was successfully returned.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                properties:
-                  response:
-                    type: string
-                    example: Hello World!
-        '401':
-          description: Authorization was denied.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                properties:
-                  message:
-                    type: string
-                    example: Authorization has been denied for this request.
-  
-  /users/echo:
-    get:
-      description: Returns the given input string
-      parameters:
-        - name: input
-          in: query
-          description: The string to be returned
-          schema:
-            type: string
-            example: Echo!
-      
-      responses:
-        '200':
-          description: The input string was successfully returned.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                properties:
-                  response:
-                    type: string
-                    example: Echo!
-        '401':
-          description: Authorization was denied.
-          content:
-            application/json; charset=utf-8:
-              schema:
-                properties:
-                  message:
-                    type: string
-                    example: Authorization has been denied for this request.
-    
-  /coursecatalogue:
-    get:
-      description: Returns the course catalogue for the PersonalId on the PostalSiteId and in the Categories, filtered by SearchField.
-      parameters:
-        - name: PersonalId
-          in: query
+  /user/setEmail:
+    post:
+      description: Update the currently logged in user's email.
+      summary: POST new email for current user.
+      parameters: 
+        - in: query
+          name: newUserEmail
           required: true
           schema:
             type: string
-            example: 1C4F7518-6DAD-4573-9E48-218E1EB8E05C
-        - name: SearchField
-          in: query
-          allowEmptyValue: true
-          schema:
-            type: string
-            example: Management
-        - name: Categories
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: PortalSiteId
-          in: query
-          required: true
-          schema:
-            type: string
-            example: '1'
         - name: Cookie
+          required: true
           in: header
           schema:
             type: string
-            example: >-
-              ASP.NET_SessionId=hqmcv2grmvqdtauii553k020; sessionTimeout=119;
-              __RequestVerificationToken_L0x1dml0UG9ydGFs0=mcxnQs_yKvhkRKNqds2U0hq7x2EbV5-iNOWwKHSZBznFdMk5MRByoBoxolYRpxxlCdNqkhw9F-jBKLGQwfqcI5eX7D5W6NX-aey0Gh812RA1;
-              __RequestVerificationToken_L2x1dml0YWRtaW41=8valxzyc3gUmKl_Ie680vrM1neq85u7Ng9CQFdPDYiSxIz_pOnmJzCn1oaq_8JxAiwdpWySdJHHzI0GScDG4P44z7-AKaMpz_-3n8LxM6JA1;
-              la2004b=8A5D04D89E809836C24A5CBC55D456ADBEEF552736644717D63A9D550B92EC6216A86469E77660102CA281F2C7D0CF5164E2F0E8A9FD3FD79F30819AA04B7B376FBAFE85322BDD7E71507F3A642E18993ED9E4A75C3800EBF4DD9028CAF432C10AFB441376D095E93D875B586B7C9FDF16FF7D6A69E5D63AA8AC4B6691D5034648F1DFF4B1D58760D16CEE2CD3EAACC4;
-              activeMenus=45portalsites;
-              __RequestVerificationToken_L0xGVg2=WZdMB8L3YRYvD9EMksTZRWRBttErSnMX157kt1KShxchADF_TuQKOvpxPCrl6IK1iM8OMZcRQru4FWtLGbjdCtLbMMI_fHuBWr37gSxAISg1;
-              lp2004b=092E20D1FA063E131DFACB66DC3D7C5C26D7B37A1F96A67818459DD235DBA0035A427016FD4F5CF011D19F19C5450A377F73FAC8084E2A631A20F573E56E3EB5A1AC7E1423B27C28B5C44BD977336705EBE8A6801AA2575BAC9B14599C187A62D5F805A636AA8F0326C11A41F17BEC07;
-              username=;
+      
       responses:
         '200':
-          description: The course catalogue
+          description: Email set successfully!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: success
+      
+
+  /education/programs/teamstats/{teamId}:
+    get:
+      description: Get programs stats for a team.
+      summary: GET Team stats.
+      parameters:
+        - in: path
+          name: teamId
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: startDate
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: endDate
+          required: true
+          schema:
+            type: string
+        - name: Cookie
+          required: true
+          in: header
+          schema:
+            type: string
+      
+      responses:
+        '200':
+          description: Data returned successfully!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ProgramStatss'
+      
+        '401':
+          description: Invalid Cookie (used for authorization)!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.      
+  
+  /coursecatalogue/{unitId}:
+    get:
+      description: Get courses in course catalogue for a specific unit.
+      summary: GET Course catalogue
+      parameters: 
+        - in: path
+          name: unitId
+          schema:
+            type: integer
+          required: true
+        - name: Cookie
+          required: true
+          in: header
+          schema:
+            type: string
+      
+      responses:
+        '200':
+          description: Data returned successfully!
           content:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Courses'
+      
+        '401':
+          description: Invalid Cookie (used for authorization)!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.
+
                     
   /engagement/dataforunit:
     get:
-      description: Returns data for the unit
+      description: Returns data for the unit.
       parameters:
         - name: selectionId
           in: query
@@ -136,35 +140,67 @@ paths:
           in: header
           schema:
             type: string
-            example: >-
-              ASP.NET_SessionId=hqmcv2grmvqdtauii553k020; sessionTimeout=119;
-              __RequestVerificationToken_L0x1dml0UG9ydGFs0=mcxnQs_yKvhkRKNqds2U0hq7x2EbV5-iNOWwKHSZBznFdMk5MRByoBoxolYRpxxlCdNqkhw9F-jBKLGQwfqcI5eX7D5W6NX-aey0Gh812RA1;
-              __RequestVerificationToken_L2x1dml0YWRtaW41=8valxzyc3gUmKl_Ie680vrM1neq85u7Ng9CQFdPDYiSxIz_pOnmJzCn1oaq_8JxAiwdpWySdJHHzI0GScDG4P44z7-AKaMpz_-3n8LxM6JA1;
-              la2004b=8A5D04D89E809836C24A5CBC55D456ADBEEF552736644717D63A9D550B92EC6216A86469E77660102CA281F2C7D0CF5164E2F0E8A9FD3FD79F30819AA04B7B376FBAFE85322BDD7E71507F3A642E18993ED9E4A75C3800EBF4DD9028CAF432C10AFB441376D095E93D875B586B7C9FDF16FF7D6A69E5D63AA8AC4B6691D5034648F1DFF4B1D58760D16CEE2CD3EAACC4;
-              activeMenus=45portalsites;
-              __RequestVerificationToken_L0xGVg2=WZdMB8L3YRYvD9EMksTZRWRBttErSnMX157kt1KShxchADF_TuQKOvpxPCrl6IK1iM8OMZcRQru4FWtLGbjdCtLbMMI_fHuBWr37gSxAISg1;
-              lp2004b=092E20D1FA063E131DFACB66DC3D7C5C26D7B37A1F96A67818459DD235DBA0035A427016FD4F5CF011D19F19C5450A377F73FAC8084E2A631A20F573E56E3EB5A1AC7E1423B27C28B5C44BD977336705EBE8A6801AA2575BAC9B14599C187A62D5F805A636AA8F0326C11A41F17BEC07;
-              username=;
             
       responses:
         '200':
-          description: Data returned successfully
+          description: Data returned successfully!
           content:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/UnitData'
+                
+        '401':
+          description: Invalid Cookie (used for authorization)!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.
 
 components:
   schemas:
+  
+    ProgramStats:
+      description: Program stats.
+      properties:
+        CourseObjectId:
+          type: integer
+        ActivityId:
+          type: integer
+        Title:
+          type: string
+        Description:
+          type: string
+        NoOfRegistered:
+          type: integer
+        NoOfCompleted:
+          type: integer
+        Summary:
+          type: string
+        StartDate:
+          type: string
+        EndDate:
+          type: string
+        Responsible:
+          type: string
+        
+    
+    ProgramStatss:
+      description: Array of ProgramStats.
+      type: array
+      items:
+        $ref: '#/components/schemas/ProgramStats'
     
     Courses:
-      description: Array of courses
+      description: Array of LacapiCourseCatalogueCourse.
       type: array
       items: 
-        $ref: '#/components/schemas/Course'
+        $ref: '#/components/schemas/LacapiCourseCatalogueCourse'
     
-    Course:
-      description: A course
+    LacapiCourseCatalogueCourse:
+      description: A course.
       properties:
         courseId: 
           type: integer
@@ -183,7 +219,7 @@ components:
     
     UnitData:
       type: object
-      description: Collection of unit data
+      description: Collection of unit data.
       properties:
         EngagementStatus:
           type: object
@@ -202,4 +238,117 @@ components:
           type: array
           items:
             type: string
+            
+#  /users/helloworld:
+#    get:
+#      description: Returns the string "Hello World!", if you ask nicely.
+#      responses:
+#        '200':
+#          description: The string was successfully returned.
+#          content:
+#            application/json; charset=utf-8:
+#              schema:
+#                properties:
+#                  response:
+#                    type: string
+#                    example: Hello World!
+#        '401':
+#          description: Authorization was denied.
+#          content:
+#            application/json; charset=utf-8:
+#              schema:
+#                properties:
+#                  message:
+#                    type: string
+#                    example: Authorization has been denied for this request.
+  
+#  /users/echo:
+#    get:
+#      description: Returns the given input string
+#      parameters:
+#        - name: input
+#          in: query
+#          description: The string to be returned
+#          schema:
+#            type: string
+#            example: Echo!
+#      
+#      responses:
+#        '200':
+#          description: The input string was successfully returned.
+#          content:
+#            application/json; charset=utf-8:
+#              schema:
+#                properties:
+#                  response:
+#                    type: string
+#                    example: Echo!
+#        '401':
+#          description: Authorization was denied.
+#          content:
+#            application/json; charset=utf-8:
+#              schema:
+#                properties:
+#                  message:
+#                    type: string
+#                    example: Authorization has been denied for this request.
     
+#  /coursecatalogue:
+#    get:
+#      description: Returns the course catalogue for the PersonalId on the PostalSiteId and in the Categories, filtered by SearchField.
+#      parameters:
+#        - name: PersonalId
+#          in: query
+#          required: true
+#          schema:
+#            type: string
+#            example: 1C4F7518-6DAD-4573-9E48-218E1EB8E05C
+#        - name: SearchField
+#          in: query
+#          allowEmptyValue: true
+#          schema:
+#            type: string
+#            example: Management
+#        - name: Categories
+#          in: query
+#          required: false
+#          schema:
+#            type: string
+#        - name: Categories
+#          in: query
+#          required: false
+#          schema:
+#            type: string
+#        - name: Categories
+#          in: query
+#          required: false
+#          schema:
+#            type: string
+#        - name: Categories
+#          in: query
+#          required: false
+#          schema:
+#            type: string
+#        - name: Categories
+#          in: query
+#          required: false
+#          schema:
+#            type: string
+#        - name: PortalSiteId
+#          in: query
+#          required: true
+#          schema:
+#            type: string
+#            example: '1'
+#        - name: Cookie
+#          in: header
+#          schema:
+#            type: string
+#            example: 
+#      responses:
+#        '200':
+#          description: The course catalogue
+#          content:
+#            application/json; charset=utf-8:
+#              schema:
+#                $ref: '#/components/schemas/Courses'
