@@ -119,6 +119,7 @@ paths:
                     
   /engagement/dataforunit:
     get:
+      summary: GET Unit data.
       description: Returns data for the unit.
       parameters:
         - name: selectionId
