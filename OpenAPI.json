@@ -14,15 +14,15 @@ paths:
     post:
       description: Update the currently logged in user's email.
       summary: POST new email for current user.
+      security: 
+        - cookieAuth: []
+        - loginToken: []
+      servers: 
+        - url: 'https://localhost/Luvit.Api/v1'
       parameters: 
         - in: query
           name: newUserEmail
           required: true
-          schema:
-            type: string
-        - name: Cookie
-          required: true
-          in: header
           schema:
             type: string
       
@@ -41,7 +41,10 @@ paths:
   /education/programs/teamstats/{teamId}:
     get:
       description: Get programs stats for a team.
-      summary: GET Team stats.
+      summary: GET Team stats
+      security: 
+        - cookieAuth: []
+        - loginToken: []
       parameters:
         - in: path
           name: teamId
@@ -56,11 +59,6 @@ paths:
         - in: query
           name: endDate
           required: true
-          schema:
-            type: string
-        - name: Cookie
-          required: true
-          in: header
           schema:
             type: string
       
@@ -86,17 +84,16 @@ paths:
     get:
       description: Get courses in course catalogue for a specific unit.
       summary: GET Course catalogue
+      security: 
+        - cookieAuth: []
+        - loginToken: []
       parameters: 
         - in: path
           name: unitId
           schema:
             type: integer
           required: true
-        - name: Cookie
-          required: true
-          in: header
-          schema:
-            type: string
+
       
       responses:
         '200':
@@ -119,8 +116,11 @@ paths:
                     
   /engagement/dataforunit:
     get:
-      summary: GET Unit data.
+      summary: GET Unit data
       description: Returns data for the unit.
+      security: 
+        - cookieAuth: []
+        - loginToken: []
       parameters:
         - name: selectionId
           in: query
@@ -137,10 +137,10 @@ paths:
           schema:
             type: string
             example: hello
-        - name: Cookie
-          in: header
-          schema:
-            type: string
+#        - name: Cookie
+#          in: header
+#          schema:
+#            type: string
             
       responses:
         '200':
@@ -239,7 +239,18 @@ components:
           type: array
           items:
             type: string
-            
+  
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: header
+      name: Cookie
+    loginToken:
+      type: apiKey
+      in: header
+      name: Authorization  
+    
+  
 #  /users/helloworld:
 #    get:
 #      description: Returns the string "Hello World!", if you ask nicely.
