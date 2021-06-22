@@ -14,6 +14,8 @@ paths:
     put:
       summary: Update job experience
       description: Update job experience for user.
+      tags:
+        - Users
       security: 
         - Cookie: []
           Authorization: []
@@ -53,12 +55,25 @@ paths:
       responses:
         '200':
           description: Job experience updated successfully!
-      
-
+          
+        '401':
+          description: Authorization denied!
+          content:
+            application/json; charset=utf-8:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: Authorization has been denied for this request.        
+          
+        '403':
+          description: Forbidden. Insufficient access rights.          
   /users/jobpositions:
     delete:
       summary: Delete job position
       description: Remove job position from user.
+      tags:
+        - Users
       security: 
         - Cookie: []
           Authorization: []
@@ -79,7 +94,7 @@ paths:
           
             
         '401':
-          description: Invalid Cookie (used for authorization)!
+          description: Authorization denied!
           content:
             application/json; charset=utf-8:
               schema:
@@ -88,11 +103,15 @@ paths:
                     type: string
                     example: Authorization has been denied for this request.
 
+        '403':
+          description: Forbidden. Insufficient access rights.
 
   /user/setEmail:
     post:
       summary: Update email
       description: Update the currently logged in user's email
+      tags:
+        - Users 
       security: 
         - cookie_localhost: []
           authorization_localhost: []
@@ -115,7 +134,7 @@ paths:
                 example: success
 
         '401':
-          description: Authorization denied
+          description: Authorization denied!
           content:
             application/json; charset=utf-8:
               schema:
@@ -131,6 +150,8 @@ paths:
     get:
       summary: Get team stats
       description: Get programs stats for a team.
+      tags:
+        - Education
       security: 
         - Cookie: []
           Authorization: []
@@ -160,7 +181,7 @@ paths:
                 $ref: '#/components/schemas/ProgramStatss'
       
         '401':
-          description: Authorization denied
+          description: Authorization denied!
           content:
             application/json; charset=utf-8:
               schema:
@@ -168,11 +189,16 @@ paths:
                   message:
                     type: string
                     example: Authorization has been denied for this request.      
+        
+        '403':
+          description: Forbidden. Insufficient access rights.                    
   
   /coursecatalogue/{unitId}:
     get:
       summary: Get course catalogue
       description: Get courses in course catalogue for a specific unit.
+      tags:
+        - Course Catalogue
       security: 
         - Cookie: []
           Authorization: []
@@ -193,7 +219,7 @@ paths:
                 $ref: '#/components/schemas/Courses'
       
         '401':
-          description: Authorization denied
+          description: Authorization denied!
           content:
             application/json; charset=utf-8:
               schema:
@@ -202,10 +228,15 @@ paths:
                     type: string
                     example: Authorization has been denied for this request.
                     
+        '403':
+          description: Forbidden. Insufficient access rights.                    
+                    
   /engagement/dataforunit:
     get:
       summary: Get unit data
       description: Returns data for the unit.
+      tags:
+        - Engagement
       security: 
         - Cookie: []
           Authorization: []
@@ -235,7 +266,7 @@ paths:
                 $ref: '#/components/schemas/UnitData'
                 
         '401':
-          description: Authorization denied
+          description: Authorization denied!
           content:
             application/json; charset=utf-8:
               schema:
@@ -243,6 +274,9 @@ paths:
                   message:
                     type: string
                     example: Authorization has been denied for this request.
+
+        '403':
+          description: Forbidden. Insufficient access rights.                    
 
 components:
   schemas:
