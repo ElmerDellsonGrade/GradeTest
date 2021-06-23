@@ -12,7 +12,7 @@ paths:
 
   /coursecatalogue:
     get:
-      summary: Get course catalogue.
+      summary: Get course catalogue
       description: Returns the course catalogue for the PersonalId on the PostalSiteId and in the Categories, filtered by SearchField.
       tags:
         - Course Catalogue
@@ -106,7 +106,7 @@ paths:
                     example: Authorization has been denied for this request.
                     
         '403':
-          description: Forbidden. Insufficient access rights.        
+          description: Forbidden. Insufficient access rights.
 
   /education/programs/teamstats/{teamId}:
     get:
