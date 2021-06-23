@@ -10,7 +10,6 @@ servers:
 
 paths:
 
-
   /coursecatalogue:
     get:
       summary: Get course catalogue.
