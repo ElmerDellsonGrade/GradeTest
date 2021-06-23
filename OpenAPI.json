@@ -10,6 +10,66 @@ servers:
 
 paths:
 
+
+  /coursecatalogue:
+    get:
+      description: Returns the course catalogue for the PersonalId on the PostalSiteId and in the Categories, filtered by SearchField.
+      parameters:
+        - name: PersonalId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: 1C4F7518-6DAD-4573-9E48-218E1EB8E05C
+        - name: SearchField
+          in: query
+          allowEmptyValue: true
+          schema:
+            type: string
+        - name: Categories
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: Categories
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: Categories
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: Categories
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: Categories
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: PortalSiteId
+          in: query
+          required: true
+          schema:
+            type: string
+            example: '1'
+        - name: Cookie
+          in: header
+          schema:
+            type: string
+            example: 
+      responses:
+        '200':
+          description: The course catalogue
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Courses'
+
   /coursecatalogue/{unitId}:
     get:
       summary: Get course catalogue
@@ -431,63 +491,3 @@ components:
 #                  message:
 #                    type: string
 #                    example: Authorization has been denied for this request.
-    
-#  /coursecatalogue:
-#    get:
-#      description: Returns the course catalogue for the PersonalId on the PostalSiteId and in the Categories, filtered by SearchField.
-#      parameters:
-#        - name: PersonalId
-#          in: query
-#          required: true
-#          schema:
-#            type: string
-#            example: 1C4F7518-6DAD-4573-9E48-218E1EB8E05C
-#        - name: SearchField
-#          in: query
-#          allowEmptyValue: true
-#          schema:
-#            type: string
-#            example: Management
-#        - name: Categories
-#          in: query
-#          required: false
-#          schema:
-#            type: string
-#        - name: Categories
-#          in: query
-#          required: false
-#          schema:
-#            type: string
-#        - name: Categories
-#          in: query
-#          required: false
-#          schema:
-#            type: string
-#        - name: Categories
-#          in: query
-#          required: false
-#          schema:
-#            type: string
-#        - name: Categories
-#          in: query
-#          required: false
-#          schema:
-#            type: string
-#        - name: PortalSiteId
-#          in: query
-#          required: true
-#          schema:
-#            type: string
-#            example: '1'
-#        - name: Cookie
-#          in: header
-#          schema:
-#            type: string
-#            example: 
-#      responses:
-#        '200':
-#          description: The course catalogue
-#          content:
-#            application/json; charset=utf-8:
-#              schema:
-#                $ref: '#/components/schemas/Courses'
