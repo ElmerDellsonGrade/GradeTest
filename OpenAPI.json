@@ -13,7 +13,13 @@ paths:
 
   /coursecatalogue:
     get:
+      summary: Get course catalogue.
       description: Returns the course catalogue for the PersonalId on the PostalSiteId and in the Categories, filtered by SearchField.
+      tags:
+        - Course Catalogue
+      security:
+        - Cookie: []
+          Authorization: []
       parameters:
         - name: PersonalId
           in: query
@@ -57,11 +63,6 @@ paths:
           schema:
             type: string
             example: '1'
-        - name: Cookie
-          in: header
-          schema:
-            type: string
-            example: 
       responses:
         '200':
           description: The course catalogue
