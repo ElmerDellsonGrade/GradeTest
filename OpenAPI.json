@@ -19,6 +19,8 @@ paths:
       security:
         - Cookie: []
           Authorization: []
+        - cookie: []
+          authorization: []
       parameters:
         - name: PersonalId
           in: query
@@ -80,6 +82,8 @@ paths:
       security: 
         - Cookie: []
           Authorization: []
+        - cookie: []
+          authorization: []
       parameters: 
         - in: path
           name: unitId
@@ -118,6 +122,8 @@ paths:
       security: 
         - Cookie: []
           Authorization: []
+        - cookie: []
+          authorization: []
       parameters:
         - in: path
           name: teamId
@@ -165,6 +171,8 @@ paths:
       security: 
         - Cookie: []
           Authorization: []
+        - cookie: []
+          authorization: []
       parameters:
         - name: selectionId
           in: query
@@ -212,6 +220,8 @@ paths:
       security: 
         - Cookie: []
           Authorization: []
+        - cookie: []
+          authorization: []
       parameters:
         - name: Id
           in: query
@@ -270,6 +280,8 @@ paths:
       security: 
         - Cookie: []
           Authorization: []
+        - cookie: []
+          authorization: []
       servers: 
         - url: 'https://localhost/Luvit.Api/v1'
       parameters: 
@@ -305,9 +317,11 @@ paths:
       description: Update the currently logged in user's email
       tags:
         - Users 
-      security: 
-        - cookie_localhost: []
-          authorization_localhost: []
+      security:
+        - Cookie: []
+          Authorization: []
+        - cookie: []
+          authorization: []
       servers: 
         - url: 'https://localhost/Luvit.Api/v1'
       parameters: 
@@ -420,6 +434,7 @@ components:
             type: string
   
   securitySchemes:
+  
     Cookie:
       type: apiKey
       in: header
@@ -427,16 +442,19 @@ components:
     Authorization:
       type: apiKey
       in: header
-      name: Authorization  
+      name: Authorization
       
-    cookie_localhost:
+    cookie:
       type: apiKey
       in: header
       name: cookie
-    authorization_localhost:
+    authorization:
       type: apiKey
       in: header
-      name: authorization  
+      name: authorization
+      
+# Against develop.luvit.se, route requests via proxy and authorize using Cookie and Authorization
+# Against localhost, route requests via browser and authorize using cookie and authorization
     
   
 #  /users/helloworld:
